@@ -1,5 +1,6 @@
 package ru.iteco.itecospringcource.service;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.iteco.itecospringcource.model.AccountInfo;
@@ -14,7 +15,7 @@ public class AccountServiceImpl implements AccountService {
     private final PersonalInformationService personalInformationService;
     private final List<BankBookService> bankBookServices;
 
-    public AccountServiceImpl(PersonalInformationService personalInformationService,
+    public AccountServiceImpl(@Lazy PersonalInformationService personalInformationService,
                               List<BankBookService> bankBookServices) {
         this.personalInformationService = personalInformationService;
         this.bankBookServices = bankBookServices;
@@ -36,6 +37,11 @@ public class AccountServiceImpl implements AccountService {
         }
 
         return accountInfo;
+    }
+
+    @Override
+    public String getPersonalInfoClass() {
+        return personalInformationService.getClass().toString();
     }
 
 }
