@@ -22,6 +22,18 @@ public class AccountBankApplication {
         IObject objectValue = applicationContext.getBean(IObject.class);
         System.out.println("objectValue type" + objectValue.getClass());
         System.out.println("result info: " + objectValue.getInfo());
+
+        System.out.println();
+        System.out.println("-----------------------------------Вывод ДЗ-----------------------------------");
+        System.out.println();
+
+        Flow flow = applicationContext.getBean(Flow.class);
+
+        flow.run(1);
+        flow.run(2);
+        flow.run(2);
+        flow.run(3);
+        flow.run(4);
     }
 
 }

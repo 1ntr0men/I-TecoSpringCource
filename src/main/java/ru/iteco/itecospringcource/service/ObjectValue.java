@@ -2,6 +2,7 @@ package ru.iteco.itecospringcource.service;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import ru.iteco.itecospringcource.model.annotation.CacheResult;
 import ru.iteco.itecospringcource.model.annotation.EncryptResult;
 import ru.iteco.itecospringcource.model.annotation.InjectRandom;
 
@@ -15,6 +16,7 @@ public class ObjectValue implements IObject {
     @InjectRandom(min = 10, max = 100)
     private int value2;
 
+    @CacheResult
     @EncryptResult
     public String getInfo() {
         return "ObjectValue{" +
