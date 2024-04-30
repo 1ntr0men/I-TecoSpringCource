@@ -1,6 +1,7 @@
 package ru.iteco.itecospringcource.apect;
 
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -13,14 +14,18 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class LoggingAspect {
 
-    @Before("allMethod()")
-    public void beforeAllGetMethodAdvice() {
-        log.info("beforeAllGetMethodAdvice:: Call Get method");
+    @Before("allGetMethod() || allSetMethod()")
+    public void beforeAllGetOrSetMethodAdvice(JoinPoint joinPoint) {
+
+        log.info("beforeAllGetOrSetMethodAdvice:: Call method: {} with arguments {}", joinPoint.getSignature().getName(), joinPoint.getArgs());
     }
 
     @Pointcut("execution(public * get*(..))")
-    public void allMethod() {
+    public void allGetMethod() {
+    }
 
+    @Pointcut("execution(public * set*(..))")
+    public void allSetMethod() {
     }
 
 }

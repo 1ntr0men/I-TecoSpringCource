@@ -36,4 +36,9 @@ public class ExternalServiceImpl implements ExternalService {
         System.out.println("getExternalInfo был вызван с айди: " + id);
         return dataMap.get(id);
     }
+
+    @Override
+    public void saveExternalInfo(ExternalInfo externalInfo) {
+        dataMap.put(externalInfo.getId(), externalInfo);
+    }
 }
