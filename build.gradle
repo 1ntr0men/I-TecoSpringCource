@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.4'
+    id "io.freefair.aspectj" version "5.3.3.3"
 }
 
 group = 'ru.iteco'
@@ -24,9 +25,13 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation "org.aspectj:aspectjrt:1.9.7"
+    implementation "org.aspectj:aspectjweaver:1.9.7"
+
+    implementation 'ch.qos.logback:logback-classic:1.4.14' // Добавляем зависимость на Logback
 }
 
 tasks.named('test') {

@@ -1,13 +1,18 @@
 package ru.iteco.itecospringcource;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import ru.iteco.itecospringcource.model.AccountInfo;
+import ru.iteco.itecospringcource.repository.ExternalRepository;
 import ru.iteco.itecospringcource.service.*;
 
+@Slf4j
 @ComponentScan
+@EnableAspectJAutoProxy
 @PropertySource("classpath:application.properties")
 public class AccountBankApplication {
     public static void main(String[] args) {
@@ -34,6 +39,9 @@ public class AccountBankApplication {
         flow.run(2);
         flow.run(3);
         flow.run(4);
+
+        ExternalRepository externalRepository = applicationContext.getBean(ExternalRepository.class);
+        log.info("Result of externalRepository: {}", externalRepository.getInfo());
     }
 
 }
