@@ -8,7 +8,6 @@ import ru.iteco.itecospringcource.model.annotation.InjectRandom;
 
 import java.lang.reflect.Field;
 
-@Component
 public class InjectRandomBeanPostProcessor implements BeanPostProcessor {
 
     @Override

@@ -34,7 +34,14 @@ public class ExternalServiceImpl implements ExternalService {
         System.out.println("Реализация задания: Метод getExternalInfo должен получать ExternalInfo по id из HashMap (добавить лог вызова метода).");
 
         System.out.println("getExternalInfo был вызван с айди: " + id);
-        return dataMap.get(id);
+        ExternalInfo externalInfo = dataMap.get(id);
+
+        if (externalInfo == null) {
+            throw new RuntimeException("Не найдено!");
+        } else {
+            return externalInfo;
+        }
+
     }
 
     @Override

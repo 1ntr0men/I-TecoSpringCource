@@ -12,7 +12,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
 public class CacheResultBeanPostProcessor implements BeanPostProcessor {
 
     private final Map<String, Object> cache = new HashMap<>();

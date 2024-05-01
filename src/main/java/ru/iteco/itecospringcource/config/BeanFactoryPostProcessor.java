@@ -13,7 +13,7 @@ import ru.iteco.itecospringcource.model.annotation.CacheResult;
 
 import java.lang.reflect.Method;
 
-@Component
+
 public class BeanFactoryPostProcessor implements BeanPostProcessor {
 
     @Override

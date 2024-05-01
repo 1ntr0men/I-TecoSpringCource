@@ -12,8 +12,8 @@ import java.util.List;
 @Scope("prototype")
 public class BankBookServiceImpl implements BankBookService {
 
-    @InjectRandom(max = 100)
-    private Integer number;
+//    @InjectRandom(max = 100)
+    private Integer number = 55;
 
     @Override
     @CacheResult

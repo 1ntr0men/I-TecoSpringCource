@@ -15,7 +15,6 @@ import javax.crypto.KeyGenerator;
 import java.lang.reflect.Method;
 import java.util.Base64;
 
-@Component
 public class EncryptResultBeanPostProcessor implements BeanPostProcessor {
 
     @Override
