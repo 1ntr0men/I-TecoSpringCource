@@ -1,5 +1,6 @@
 package ru.iteco.itecospringcource.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +9,9 @@ import ru.iteco.itecospringcource.model.BankBookDto;
 import ru.iteco.itecospringcource.service.BankBookService;
 
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/bank-book")
 public class BankBookController {
@@ -20,8 +23,9 @@ public class BankBookController {
         this.bankBookService = bankBookService;
     }
 
-    @GetMapping("/by-user-id/{userId}")
-    public ResponseEntity<List<BankBookDto>> getBankBooksByUserId(@PathVariable Integer userId) {
+    @GetMapping("/by-user-id")
+    public ResponseEntity<List<BankBookDto>> getBankBooksByUserId(@CookieValue Integer userId, @RequestHeader Map<String, String> headers) {
+        log.info("Call with headers: {}", headers);
         return ResponseEntity.ok(bankBookService.getAllUserBankBooks(userId));
     }
 
