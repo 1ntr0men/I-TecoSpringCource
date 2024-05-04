@@ -1,18 +1,23 @@
 package ru.iteco.itecospringcource.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import ru.iteco.itecospringcource.model.BankBookDto;
 import ru.iteco.itecospringcource.service.BankBookService;
+import ru.iteco.itecospringcource.validation.Update;
 
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @RestController
+@Validated
 @RequestMapping("/bank-book")
 public class BankBookController {
 
@@ -29,16 +34,17 @@ public class BankBookController {
         return ResponseEntity.ok(bankBookService.getAllUserBankBooks(userId));
     }
 
-    @GetMapping("/{bankBookId}")
-    public ResponseEntity<BankBookDto> getBankBookById(@PathVariable Integer bankBookId) {
-        return ResponseEntity.ok(bankBookService.getBankBookById(bankBookId));
+    @GetMapping("/{Id}")
+    public ResponseEntity<BankBookDto> getBankBookById(@Min(value = 0L, message = "Больше 0!") @PathVariable Integer Id) {
+        return ResponseEntity.ok(bankBookService.getBankBookById(Id));
     }
 
     @PostMapping
-    public ResponseEntity<BankBookDto> createBankBook(@RequestBody BankBookDto bankBookDto) {
+    public ResponseEntity<BankBookDto> createBankBook(@Valid @RequestBody BankBookDto bankBookDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(bankBookService.createBankBook(bankBookDto));
     }
 
+    @Validated(Update.class)
     @PutMapping
     public BankBookDto updateBankBook(@RequestBody BankBookDto bankBookDto) {
         return bankBookService.updateBankBook(bankBookDto);
