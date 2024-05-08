@@ -7,6 +7,6 @@ public class EmailValidator implements ConstraintValidator<EmailValidity, String
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        return s.contains("@") && s.contains(".");
+        return s != null && s.contains("@") && s.contains(".");
     }
 }

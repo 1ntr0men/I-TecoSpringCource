@@ -26,3 +26,8 @@ Zoom.
 ▪️ Spring Security. Аутентификация и авторизация;
 
 ▪️ Spring Cloud. Распределенные системы.
+
+Команда для создания докер контейнера для работы с базой, используемой в этом проекте:
+```shell
+docker run --name account-postgres -p 5432:5432 -e POSTGRES_USER=account -e POSTGRES_PASSWORD=account -e POSTGRES_DB=account -d postgres:14
+```
