@@ -6,31 +6,35 @@ import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
 
-@Builder
 @Getter
 @Setter
 @ToString
+@Builder
 @Entity
-@Table(name = "users", schema = "ad")
+@Table(name= "address", schema = "ad")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
+public class AddressEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "country")
+    private String country;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "city")
+    private String city;
 
-    @ToString.Exclude
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id",referencedColumnName = "id")
-    private AddressEntity address;
+    @Column(name = "street")
+    private String street;
+
+    @Column(name = "home")
+    private String home;
+
+    @OneToOne(mappedBy = "address")
+    private UserEntity user;
 
     @Override
     public final boolean equals(Object o) {
@@ -39,7 +43,7 @@ public class UserEntity {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        UserEntity that = (UserEntity) o;
+        AddressEntity that = (AddressEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

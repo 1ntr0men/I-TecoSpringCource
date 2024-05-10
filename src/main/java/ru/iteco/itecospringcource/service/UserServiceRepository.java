@@ -1,33 +1,45 @@
 package ru.iteco.itecospringcource.service;
 
-import org.apache.catalina.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import ru.iteco.itecospringcource.model.AddressDto;
 import ru.iteco.itecospringcource.model.UserDto;
+import ru.iteco.itecospringcource.model.entity.AddressEntity;
 import ru.iteco.itecospringcource.model.entity.UserEntity;
+import ru.iteco.itecospringcource.repository.AddressRepository;
 import ru.iteco.itecospringcource.repository.UserRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 @Primary
 public class UserServiceRepository implements UserService {
 
     private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
 
-    public UserServiceRepository(UserRepository userRepository) {
+    public UserServiceRepository(UserRepository userRepository, AddressRepository addressRepository) {
         this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
     }
 
     @Override
     public List<UserDto> getAll() {
-        return userRepository.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
+        return userRepository.findAll().stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public UserDto getById(Integer id) {
-        return mapToDto(userRepository.getById(id));
+        UserEntity userEntity = userRepository.getById(id);
+        AddressEntity address = userEntity.getAddress();
+        log.info("User from address: {}", address.getUser());
+
+        return mapToDto(userEntity);
     }
 
     @Override
@@ -41,7 +53,14 @@ public class UserServiceRepository implements UserService {
         UserEntity userEntity = userRepository.findById(userDto.getId()).orElseThrow(() -> new RuntimeException("User not found!"));
         userEntity.setName(userDto.getName());
         userEntity.setEmail(userDto.getEmail());
-
+        AddressDto addressDto = userDto.getAddress();
+        AddressEntity address = userEntity.getAddress();
+        if (addressDto != null && address != null) {
+            address.setCountry(addressDto.getCountry());
+            address.setCity(addressDto.getCity());
+            address.setStreet(addressDto.getStreet());
+            address.setHome(addressDto.getHome());
+        }
         return mapToDto(userRepository.save(userEntity));
     }
 
@@ -50,15 +69,35 @@ public class UserServiceRepository implements UserService {
         userRepository.deleteById(id);
     }
 
-    private UserDto mapToDto(UserEntity userEntity){
+    private UserDto mapToDto(UserEntity userEntity) {
         return UserDto.builder()
                 .id(userEntity.getId())
                 .name(userEntity.getName())
                 .email(userEntity.getEmail())
+                .address(userEntity.getAddress() != null ?
+                        AddressDto.builder()
+                                .country(userEntity.getAddress().getCountry())
+                                .city(userEntity.getAddress().getCity())
+                                .street(userEntity.getAddress().getStreet())
+                                .home(userEntity.getAddress().getHome())
+                                .build()
+                        : null)
                 .build();
     }
 
     private UserEntity mapToEntity(UserDto userDto) {
-        return UserEntity.builder().id(userDto.getId()).name(userDto.getName()).email(userDto.getEmail()).build();
+        return UserEntity.builder()
+                .id(userDto.getId())
+                .name(userDto.getName())
+                .email(userDto.getEmail())
+                .address(userDto.getAddress() != null ?
+                        AddressEntity.builder()
+                                .country(userDto.getAddress().getCountry())
+                                .city(userDto.getAddress().getCity())
+                                .street(userDto.getAddress().getStreet())
+                                .home(userDto.getAddress().getHome())
+                                .build()
+                        : null)
+                .build();
     }
 }

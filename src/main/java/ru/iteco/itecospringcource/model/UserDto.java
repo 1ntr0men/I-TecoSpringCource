@@ -22,4 +22,6 @@ public class UserDto {
     @EmailValidity
     private String email;
 
+    private AddressDto address;
+
 }
