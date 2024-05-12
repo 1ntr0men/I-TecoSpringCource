@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Builder
 @Getter
@@ -31,6 +33,10 @@ public class UserEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id",referencedColumnName = "id")
     private AddressEntity address;
+
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    private Set<BankBookEntity> bankBooks = new HashSet<>();
 
     @Override
     public final boolean equals(Object o) {
