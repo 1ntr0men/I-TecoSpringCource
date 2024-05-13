@@ -36,9 +36,11 @@ public class UserServiceRepository implements UserService {
     @Override
     public UserDto getById(Integer id) {
         UserEntity userEntity = userRepository.getById(id);
+        log.info("User from repo: {}", userEntity);
         AddressEntity address = userEntity.getAddress();
         log.info("User from address: {}", address.getUser());
 
+        log.info("Group from user: {}", userEntity.getGroups());
         return mapToDto(userEntity);
     }
 

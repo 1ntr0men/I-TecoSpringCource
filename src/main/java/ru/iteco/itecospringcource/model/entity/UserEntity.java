@@ -34,9 +34,18 @@ public class UserEntity {
     @JoinColumn(name = "address_id",referencedColumnName = "id")
     private AddressEntity address;
 
-    @OneToMany(mappedBy = "user")
     @ToString.Exclude
+    @OneToMany(mappedBy = "user")
     private Set<BankBookEntity> bankBooks = new HashSet<>();
+
+    @ToString.Exclude
+    @ManyToMany
+    @JoinTable(
+            name = "users_groups", schema = "ad",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id")
+    )
+    private Set<GroupEntity> groups = new HashSet<>();
 
     @Override
     public final boolean equals(Object o) {

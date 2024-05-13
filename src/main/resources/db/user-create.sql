@@ -50,3 +50,19 @@ create table bank.bank_book
     FOREIGN KEY (user_id) REFERENCES ad.users (id),
     FOREIGN KEY (currency_id) REFERENCES dict.currency (id)
 );
+
+create sequence ad.group_id_seq;
+create table ad.group
+(
+    id   integer unique not null default nextval('ad.group_id_seq'),
+    name varchar        not null,
+    PRIMARY KEY (id)
+);
+
+create table ad.users_groups (
+    user_id integer not null,
+    group_id integer not null,
+    PRIMARY KEY (user_id, group_id),
+    FOREIGN KEY (user_id) REFERENCES ad.users(id),
+    FOREIGN KEY (group_id) REFERENCES ad.group(id)
+);

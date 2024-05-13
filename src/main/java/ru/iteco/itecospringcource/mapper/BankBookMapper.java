@@ -9,8 +9,10 @@ import ru.iteco.itecospringcource.model.entity.BankBookEntity;
 public interface BankBookMapper {
 
     @Mapping(target = "currency", source = "currency.name")
+    @Mapping(target = "userId", source = "user.id")
     BankBookDto mapToDto(BankBookEntity bankBookEntity);
 
     @Mapping(target = "currency.name", source = "currency")
+    @Mapping(target = "user.id", source = "userId")
     BankBookEntity mapToEntity(BankBookDto bankBookDto);
 }
