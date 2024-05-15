@@ -35,7 +35,7 @@ public class BankBookServiceImpl implements BankBookService {
     public BankBookDto getBankBookById(Integer id) {
         return bankBookRepository.findById(id)
                 .map(bankBookMapper::mapToDto)
-                .orElseThrow(() -> new BankBookNotFoundException("Cчет не найден!"));
+                .orElseThrow(() -> new BankBookNotFoundException("Счет не найден!"));
     }
 
     @Override
