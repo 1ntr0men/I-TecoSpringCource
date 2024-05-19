@@ -5,9 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.iteco.itecospringcource.model.BankBookDto;
 import ru.iteco.itecospringcource.model.TransactionDto;
-import ru.iteco.itecospringcource.model.entity.TransactionEntity;
 import ru.iteco.itecospringcource.service.TransactionService;
 
 import java.math.BigDecimal;
